@@ -1,0 +1,45 @@
+"--> Running asgn2.test.01 (GET a small binary file (with __-- in the name)) ... SUCCESS!
+--> Running asgn2.test.02 (GET a large binary file) ... SUCCESS!
+--> Running asgn2.test.03 (PUT a small binary file) ... SUCCESS!
+--> Running asgn2.test.04 (PUT a large binary file) ... SUCCESS!
+--> Running asgn2.test.05 (Test HEAD request for a proper response header with 200 (OK)) ... SUCCESS!
+--> Running asgn2.test.06 (Test for 400 with a bad HTTP version (HTTP 1.0)) ... SUCCESS!
+--> Running asgn2.test.07 (Test if server creates default number of threads) ... SUCCESS!
+--> Running asgn2.test.08 (Test if server can read optional arguments in any order (examples from spec)) ... SUCCESS!
+--> Running asgn2.test.09 (Test if server can handle multiple GET requests simultaneously) ... SUCCESS!
+--> Running asgn2.test.10 (Test if server can handle a GET, HEAD, and PUT request simultaneously) ... SUCCESS!
+--> Running asgn2.test.11 (Test if server can handle many requests greater than number of threads) ... SUCCESS!
+--> Running asgn2.test.12 (Test if server can log a single valid request) ... SUCCESS!
+--> Running asgn2.test.13 (Test if server truncates log files everytime it starts) ... SUCCESS!
+--> Running asgn2.test.14 (Test if server can log many valid requests sent simultaneously) ... SUCCESS!
+--> Running asgn2.test.15 (Test if server can log many valid and invalid requests (400) with multiple requests sent) ... SUCCESS!
+--> Running asgn2.test.16 (Test if server can log many valid and invalid requests (400 and 404) with multiple requests sent) ... SUCCESS!
+--> Running asgn2.test.17 (GET request to 'healthcheck' with no logging enabled (404 error)) ... SUCCESS!
+--> Running asgn2.test.18 (GET request to 'healthcheck' with logging enabled) ... SUCCESS!
+--> Running asgn2.test.19 (Test 403 error for a request to 'healthcheck' ) ... SUCCESS!
+--> Running asgn2.test.20 (Test logging of many valid and invalid requests including a request to 'healthcheck' ) ... SUCCESS!
+--> Running asgn2.test.21 (Test 403 error (PUT) for a request to 'healthcheck' ) ... SUCCESS!
+--> Running asgn2.test.22 (Test 'healthcheck' value with only valid requests) ... failure!
+++++ First 200 characters of standard error for test asgn2.test.22 are: ++++
+bash: line 21:  4528 Terminated              ./httpserver 8022 -l test22-req.log
+
+++++ end ++++
+---- Test feedback ----
+Start the server with logging enabled (-l <log-file>). Create a 6 binary files with sizes ranging from 100 B to 1 MiB, 5 with valid server-side names. Create the contents of a correctly formatted healthcheck file (0\n6) using printf redirected (>) to a <hc-file>. Send 3 HEAD (-I) , 1 PUT (-T) , and 2 GET requests using curl, each to different resources. Use the & operator to run each request in parallel. Use the keyword wait so that the script waits until all requests running in the background (&) are done. After all commands have finished, send a GET request to healthcheck using curl. Verify that the response is 0\n6 with diff on the output from curl and <hc-file>.
+---- end ----
+--> Running asgn2.test.23 (Test 'healthcheck' value with only invalid requests) ... failure!
+++++ First 200 characters of standard error for test asgn2.test.23 are: ++++
+httpserver: 403 only get requests to healthcheck
+: Success
+bash: line 21:  4560 Terminated              ./httpserver 8023 -l log.log
+
+++++ end ++++
+---- Test feedback ----
+Start the server with logging enabled (-l <log-file>). Create a file with no read permissions using chmod -r. Create an empty file using touch. Create the contents of a correctly formatted healthcheck file (5\n5) using printf redirected (>) to a <hc-file>. Send a HEAD (-I) request for the file without read permissions, and  1 PUT (-T) request to healthcheck (404 errors).  Send 2 GET requests using curl; 1 request has a bad http version (--http1.0 option) and another has a bad resource name (400 errors). Send one GET request to a file that does not exist using curl (404 error). Use the & operator to run each request in parallel. Use the keyword wait so that the script waits until all requests running in the background (&) are done. After all commands have finished, send a GET request to healthcheck using curl. Verify that the response is 5\n5 with diff on the output from curl and <hc-file>.
+---- end ----
+--> Running asgn2.test.24 (Test 'healthcheck' value with many valid requests) ... SUCCESS!
+--> Running asgn2.test.25 (Test if a single GET request to 'healthcheck' is logged correctly) ... SUCCESS!
+--> Running asgn2.test.26 (Test if a single HEAD request is logged correctly) ... SUCCESS!
+--> Running asgn2.test.27 (Test if server can handle multiple GET requests to the same resource simultaniously) ... SUCCESS!
+--> Running asgn2.test.28 (Test if server can handle multiple requests much larger (15:1 ratio) than the number of threads) ... SUCCESS!
+"
